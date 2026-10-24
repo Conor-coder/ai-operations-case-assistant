@@ -64,6 +64,10 @@ class ResponseTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             parse_ai_response(ai_result(confidence=1.2), CASE)
 
+    def test_boolean_confidence_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            parse_ai_response(ai_result(confidence=True), CASE)
+
     def test_invalid_priority(self):
         with self.assertRaises(ValidationError):
             parse_ai_response(ai_result(priority="critical"), CASE)
