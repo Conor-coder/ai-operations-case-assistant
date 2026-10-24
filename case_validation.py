@@ -54,7 +54,7 @@ def parse_ai_response(raw, case):
         raise ValidationError("AI response must be a JSON object")
     for key, expected_type in REQUIRED_AI_FIELDS.items():
         value = response.get(key)
-        if not isinstance(value, expected_type) or (expected_type is (int, float) and isinstance(value, bool)):
+        if not isinstance(value, expected_type) or (key == "confidence" and isinstance(value, bool)):
             raise ValidationError(f"Missing or invalid AI field: {key}")
     if response["case_id"] != case["case_id"]:
         raise ValidationError("AI response case ID does not match input")
